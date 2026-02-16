@@ -1,0 +1,85 @@
+<div class="my-reservations-container">
+  <h2>Mis Reservas</h2>
+
+  <!-- Success Message -->
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Cargando reservas...</p>
+  </div>
+
+  <!-- Reservations List -->
+  <div *ngIf="!isLoading && appointments.length > 0" class="reservations-list">
+    <div *ngFor="let appointment of appointments" class="reservation-card">
+      <div class="reservation-header">
+        <div class="reservation-date">
+          <span class="date-icon">📅</span>
+          {{ formatDate(appointment.date) }}
+        </div>
+        <div class="reservation-time">
+          <span class="time-icon">⏰</span>
+          {{ appointment.time }}
+        </div>
+      </div>
+
+      <div class="reservation-details">
+        <div class="detail-row">
+          <span class="label">Servicio:</span>
+          <span class="value">{{ getServiceName(appointment.serviceId) }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Precio:</span>
+          <span class="value">{{ getServicePrice(appointment.serviceId) | currency:'EUR' }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Barbero:</span>
+          <span class="value">{{ getBarberName(appointment.barberId) }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Cliente:</span>
+          <span class="value">{{ appointment.client }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Teléfono:</span>
+          <span class="value">{{ appointment.phone }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Email:</span>
+          <span class="value">{{ appointment.email }}</span>
+        </div>
+        <div *ngIf="appointment.notes" class="detail-row">
+          <span class="label">Notas:</span>
+          <span class="value">{{ appointment.notes }}</span>
+        </div>
+      </div>
+
+      <div class="reservation-footer">
+        <div class="status-badge" [ngClass]="getStatusClass(appointment.status)">
+          {{ getStatusText(appointment.status) }}
+        </div>
+        <button 
+          *ngIf="appointment.status !== 'cancelled' && appointment.status !== 'completed'"
+          class="btn-cancel" 
+          (click)="cancelAppointment(appointment._id)">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Reservations -->
+  <div *ngIf="!isLoading && appointments.length === 0" class="no-reservations">
+    <div class="empty-icon">📋</div>
+    <p>No tienes reservas aún.</p>
+    <button class="btn-primary" routerLink="/reservation">Hacer una reserva</button>
+  </div>
+</div>

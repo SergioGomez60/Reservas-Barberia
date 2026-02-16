@@ -1,0 +1,43 @@
+<div class="profile-container">
+  <div class="profile-card" *ngIf="currentUser$ | async as user; else loading">
+    <div class="profile-header">
+      <div class="avatar">
+        {{ user.name?.charAt(0)?.toUpperCase() || 'U' }}
+      </div>
+      <h2>Mi Perfil</h2>
+    </div>
+    
+    <div class="profile-content">
+      <div class="info-group">
+        <label for="name">Nombre</label>
+        <div class="info-value">{{ user.name }}</div>
+      </div>
+      
+      <div class="info-group">
+        <label for="email">Correo electrónico</label>
+        <div class="info-value">{{ user.email }}</div>
+      </div>
+      
+      <div class="info-group">
+        <label for="role">Rol</label>
+        <div class="info-value role-badge" [class.admin]="user.role === 'admin'">
+          {{ user.role === 'admin' ? 'Administrador' : user.role === 'barber' ? 'Barbero' : 'Cliente' }}
+        </div>
+      </div>
+    </div>
+    
+    <div class="profile-actions">
+      <button class="btn-logout" (click)="logout()">
+        <span class="icon">🚪</span>
+        Cerrar Sesión
+      </button>
+    </div>
+  </div>
+  
+  <ng-template #loading>
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Cargando perfil...</p>
+    </div>
+  </ng-template>
+</div>

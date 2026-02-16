@@ -1,18 +1,26 @@
 {
   "name": "barber-reservation-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend para sistema de reservas de barbería",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "seed": "node src/seed.js",
+    "dev": "node src/index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "barber",
+    "reservation",
+    "api"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^6.0.3"
   }
 }

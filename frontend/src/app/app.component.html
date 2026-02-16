@@ -1,3 +1,43 @@
-<div style="text-align:center">
-  <h1>Welcome to Barber Reservation</h1>
-</div>
+<header *ngIf="isLoggedIn()">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <h1>{{ title }}</h1>
+    </div>
+    <div class="nav-links">
+      <a routerLink="/reservation" routerLinkActive="active">Reservas</a>
+      <a routerLink="/my-reservations" routerLinkActive="active">Mis Reservas</a>
+      <a routerLink="/profile" routerLinkActive="active">Perfil</a>
+      <button class="btn-logout" (click)="logout()">Cerrar Sesión</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- Si el usuario NO está logueado: mostrar página de inicio -->
+  <section *ngIf="!isLoggedIn()" class="login-section">
+    <div class="login-container">
+      <div class="logo-container">
+        <img src="assets/logo.png" alt="Logo Barbería" class="logo" (error)="logoError($event)">
+        <div *ngIf="logoErrorFlag" class="logo-placeholder">
+          <span class="logo-icon">✂️</span>
+        </div>
+      </div>
+      <h1 class="title">Barbería</h1>
+      <p class="subtitle">Reserva tu cita con los mejores profesionales</p>
+      <div class="buttons-container">
+        <button class="btn btn-primary" (click)="goToLogin()">Iniciar Sesión</button>
+        <button class="btn btn-secondary" (click)="goToRegister()">Registrarse</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Si el usuario ESTÁ logueado: mostrar ReservationComponent -->
+  <app-reservation *ngIf="isLoggedIn()"></app-reservation>
+  
+  <!-- Rutas de autenticación -->
+  <router-outlet></router-outlet>
+</main>
+
+<footer *ngIf="isLoggedIn()">
+  <p>&copy; 2024 Barber Reservation. Todos los derechos reservados.</p>
+</footer>

@@ -1,0 +1,183 @@
+<div class="reservation-container">
+  <h2>Reserva tu Cita</h2>
+  
+  <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Client Info -->
+    <div class="form-section">
+      <h3>Información del Cliente</h3>
+      
+      <div class="form-group">
+        <label for="client">Nombre completo *</label>
+        <input 
+          type="text" 
+          id="client" 
+          formControlName="client" 
+          class="form-control"
+          placeholder="Ingresa tu nombre"
+        >
+        <div *ngIf="reservationForm.get('client')?.touched && reservationForm.get('client')?.invalid" class="error">
+          El nombre es requerido
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Teléfono *</label>
+        <input 
+          type="tel" 
+          id="phone" 
+          formControlName="phone" 
+          class="form-control"
+          placeholder="Ingresa tu teléfono"
+        >
+        <div *ngIf="reservationForm.get('phone')?.touched && reservationForm.get('phone')?.invalid" class="error">
+          El teléfono es requerido
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Correo electrónico *</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email" 
+          class="form-control"
+          placeholder="Ingresa tu correo"
+        >
+        <div *ngIf="reservationForm.get('email')?.touched && reservationForm.get('email')?.invalid" class="error">
+          Ingresa un correo válido
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Selection -->
+    <div class="form-section">
+      <h3>Servicio</h3>
+      
+      <div class="form-group">
+        <label for="serviceId">Selecciona un servicio *</label>
+        <select 
+          id="serviceId" 
+          formControlName="serviceId" 
+          class="form-control"
+          (change)="onDateChange()"
+        >
+          <option value="">-- Seleccionar --</option>
+          <option *ngFor="let service of services" [value]="service._id">
+            {{ service.name }} - ${{ service.price }} ({{ service.duration }} min)
+          </option>
+        </select>
+        <div *ngIf="reservationForm.get('serviceId')?.touched && reservationForm.get('serviceId')?.invalid" class="error">
+          Selecciona un servicio
+        </div>
+      </div>
+    </div>
+
+    <!-- Barber Selection -->
+    <div class="form-section">
+      <h3>Barbero</h3>
+      
+      <div class="form-group">
+        <label for="barberId">Selecciona un barbero *</label>
+        <select 
+          id="barberId" 
+          formControlName="barberId" 
+          class="form-control"
+          (change)="onBarberChange()"
+        >
+          <option value="">-- Seleccionar --</option>
+          <option *ngFor="let barber of barbers" [value]="barber._id">
+            {{ barber.name }} - {{ barber.specialty }}
+          </option>
+        </select>
+        <div *ngIf="reservationForm.get('barberId')?.touched && reservationForm.get('barberId')?.invalid" class="error">
+          Selecciona un barbero
+        </div>
+      </div>
+    </div>
+
+    <!-- Date & Time -->
+    <div class="form-section">
+      <h3>Fecha y Hora</h3>
+      
+      <div class="form-group">
+        <label for="date">Fecha *</label>
+        <input 
+          type="date" 
+          id="date" 
+          formControlName="date" 
+          class="form-control"
+          (change)="onDateChange()"
+          min="{{ today }}"
+        >
+        <div *ngIf="reservationForm.get('date')?.touched && reservationForm.get('date')?.invalid" class="error">
+          Selecciona una fecha
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="time">Hora *</label>
+        <select 
+          id="time" 
+          formControlName="time" 
+          class="form-control"
+          [disabled]="!selectedDate || !reservationForm.get('barberId')?.value"
+        >
+          <option value="">-- Seleccionar --</option>
+          <option *ngFor="let time of availableTimes" [value]="time">
+            {{ time }}
+          </option>
+        </select>
+        <div *ngIf="reservationForm.get('time')?.touched && reservationForm.get('time')?.invalid" class="error">
+          Selecciona una hora
+        </div>
+        <div *ngIf="selectedDate && reservationForm.get('barberId')?.value && availableTimes.length === 0" class="info">
+          No hay horarios disponibles para esta fecha
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="form-section">
+      <h3>Notas adicionales</h3>
+      
+      <div class="form-group">
+        <label for="notes">Comentarios</label>
+        <textarea 
+          id="notes" 
+          formControlName="notes" 
+          class="form-control"
+          rows="3"
+          placeholder="Alguna observación especial..."
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Price Summary -->
+    <div *ngIf="getSelectedService()" class="price-summary">
+      <h3>Resumen</h3>
+      <p><strong>Servicio:</strong> {{ getSelectedService()?.name }}</p>
+      <p><strong>Precio:</strong> ${{ getSelectedService()?.price }}</p>
+      <p><strong>Duración:</strong> {{ getSelectedService()?.duration }} minutos</p>
+    </div>
+
+    <!-- Messages -->
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Submit Button -->
+    <button 
+      type="submit" 
+      class="btn-submit"
+      [disabled]="isLoading || reservationForm.invalid"
+    >
+      {{ isLoading ? 'Reservando...' : 'Confirmar Reserva' }}
+    </button>
+
+  </form>
+</div>

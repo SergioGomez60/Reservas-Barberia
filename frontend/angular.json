@@ -6,7 +6,7 @@
     "barber-reservation-frontend": {
       "projectType": "application",
       "schematics": {},
-      "root": "src",
+      "root": "",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
@@ -90,5 +90,8 @@
       }
     }
   },
-  "defaultProject": "barber-reservation-frontend"
+  "defaultProject": "barber-reservation-frontend",
+  "cli": {
+    "analytics": false
+  }
 }
