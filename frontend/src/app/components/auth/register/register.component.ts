@@ -29,6 +29,10 @@ export class RegisterComponent {
     });
   }
 
+  goHome(): void {
+    this.router.navigate(['/']);
+  }
+
   onSubmit(): void {
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
@@ -43,9 +47,8 @@ export class RegisterComponent {
     const password = this.registerForm.get('password')?.value;
 
     this.authService.register(name, email, password).subscribe({
-      next: (user) => {
+      next: () => {
         this.isLoading = false;
-        // Redirigir al perfil o a la página principal
         this.router.navigate(['/profile']);
       },
       error: (error) => {

@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Appointment = require('../models/Appointment');
+const { sendAppointmentConfirmation } = require('../src/emailService');
 
 // POST /appointments to create a new appointment
 router.post('/', async (req, res) => {
-  const { client, barberId, serviceId, date, time, phone, notes, userId } = req.body;
+  const { client, email, barberId, serviceId, date, time, phone, notes, userId } = req.body;
 
-  if (!client || !barberId || !serviceId || !date || !time) {
+  if (!client || !email || !barberId || !serviceId || !date || !time) {
     return res.status(400).json({ message: 'All required fields must be provided' });
   }
 
@@ -24,6 +25,7 @@ router.post('/', async (req, res) => {
 
     const newAppointment = new Appointment({
       client,
+      email,
       barberId,
       serviceId,
       date,
@@ -38,7 +40,10 @@ router.post('/', async (req, res) => {
     const populatedAppointment = await Appointment.findById(savedAppointment._id)
       .populate('barberId')
       .populate('serviceId');
-    
+
+    // Enviar correo de confirmación (sin await para no bloquear la respuesta)
+    sendAppointmentConfirmation(populatedAppointment);
+
     res.status(201).json(populatedAppointment);
   } catch (error) {
     res.status(500).json({ message: 'Server error: ' + error.message });

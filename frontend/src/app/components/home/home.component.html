@@ -1,0 +1,51 @@
+<section class="hero-section">
+  <div class="hero-background">
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="brand-section">
+      <div class="logo-wrapper" (error)="logoError($event)">
+        <img src="assets/logo.png" alt="Logo Barbería" class="hero-logo" *ngIf="!logoErrorFlag">
+        <div *ngIf="logoErrorFlag" class="logo-placeholder">
+          <span class="logo-icon">✂</span>
+        </div>
+      </div>
+      <h1 class="brand-title">Barbería</h1>
+      <p class="brand-tagline">Reserva tu cita con los mejores profesionales</p>
+    </div>
+
+    <div class="cta-section">
+      <button class="btn-primary" (click)="goToLogin()">
+        <span class="btn-text">Iniciar Sesión</span>
+        <span class="btn-icon">→</span>
+      </button>
+      <button class="btn-secondary" (click)="goToRegister()">
+        <span class="btn-text">Registrarse</span>
+      </button>
+    </div>
+
+    <div class="features-section">
+      <div class="feature">
+        <div class="feature-icon">✂️</div>
+        <h3>Profesionales Expertos</h3>
+        <p>Barberos con años de experiencia</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📅</div>
+        <h3>Reserva Fácil</h3>
+        <p>Agenda tu cita en segundos</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⭐</div>
+        <h3>Calidad Premium</h3>
+        <p>Los mejores productos y servicios</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-decoration">
+    <div class="decoration-line"></div>
+    <div class="decoration-circle"></div>
+  </div>
+</section>

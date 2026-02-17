@@ -132,7 +132,7 @@ export class ReservationComponent implements OnInit {
     this.apiService.createAppointment(appointment).subscribe(
       (data) => {
         this.isLoading = false;
-        this.successMessage = '¡Reserva creada exitosamente!';
+        this.successMessage = '¡Reserva creada exitosamente! Se ha enviado un correo de confirmación.';
         this.reservationForm.reset();
         this.loadAppointments();
         // Notificar a otros componentes sobre la nueva reserva

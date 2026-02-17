@@ -28,6 +28,10 @@ export class LoginComponent {
     });
   }
 
+  goHome(): void {
+    this.router.navigate(['/']);
+  }
+
   onSubmit(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -41,9 +45,8 @@ export class LoginComponent {
     const password = this.loginForm.get('password')?.value;
 
     this.authService.login(email, password).subscribe({
-      next: (user) => {
+      next: () => {
         this.isLoading = false;
-        // Redirigir al perfil o a la página principal
         this.router.navigate(['/profile']);
       },
       error: (error) => {

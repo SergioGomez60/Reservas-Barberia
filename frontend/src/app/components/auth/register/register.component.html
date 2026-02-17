@@ -1,71 +1,97 @@
-<div class="register-container">
-  <h2>Crear Cuenta</h2>
-  
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    
-    <div class="form-group">
-      <label for="name">Nombre completo *</label>
-      <input 
-        type="text" 
-        id="name" 
-        formControlName="name" 
-        class="form-control"
-        placeholder="Ingresa tu nombre completo"
-      >
-      <div *ngIf="name?.touched && name?.invalid" class="error">
-        <span *ngIf="name?.hasError('required')">El nombre es requerido</span>
-        <span *ngIf="name?.hasError('minlength')">El nombre debe tener al menos 3 caracteres</span>
+<div class="auth-page">
+  <div class="auth-background">
+    <div class="auth-overlay"></div>
+  </div>
+
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <button class="back-btn" (click)="goHome()">
+          <span class="back-icon">←</span>
+        </button>
+        <div class="auth-logo">
+          <span class="logo-icon">✂</span>
+        </div>
+        <h1 class="auth-title">Crear Cuenta</h1>
+        <p class="auth-subtitle">Únete a nuestra barbería</p>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <div class="form-group">
+          <label for="name">Nombre completo</label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="form-control"
+              placeholder="Tu nombre completo"
+              autocomplete="name"
+            >
+          </div>
+          <div *ngIf="name?.touched && name?.invalid" class="error-text">
+            <span *ngIf="name?.hasError('required')">El nombre es requerido</span>
+            <span *ngIf="name?.hasError('minlength')">El nombre debe tener al menos 3 caracteres</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <div class="input-wrapper">
+            <span class="input-icon">✉</span>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="form-control"
+              placeholder="tu@email.com"
+              autocomplete="email"
+            >
+          </div>
+          <div *ngIf="email?.touched && email?.invalid" class="error-text">
+            <span *ngIf="email?.hasError('required')">El correo es requerido</span>
+            <span *ngIf="email?.hasError('email')">Ingresa un correo válido</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input
+              type="password"
+              id="password"
+              formControlName="password"
+              class="form-control"
+              placeholder="••••••••"
+              autocomplete="new-password"
+            >
+          </div>
+          <div *ngIf="password?.touched && password?.invalid" class="error-text">
+            <span *ngIf="password?.hasError('required')">La contraseña es requerida</span>
+            <span *ngIf="password?.hasError('minlength')">La contraseña debe tener al menos 6 caracteres</span>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-banner">
+          <span class="error-icon">⚠</span>
+          {{ errorMessage }}
+        </div>
+
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="isLoading || registerForm.invalid"
+        >
+          <span *ngIf="!isLoading">Crear Cuenta</span>
+          <span *ngIf="isLoading" class="loading-spinner"></span>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión</a></p>
       </div>
     </div>
-
-    <div class="form-group">
-      <label for="email">Correo electrónico *</label>
-      <input 
-        type="email" 
-        id="email" 
-        formControlName="email" 
-        class="form-control"
-        placeholder="Ingresa tu correo electrónico"
-      >
-      <div *ngIf="email?.touched && email?.invalid" class="error">
-        <span *ngIf="email?.hasError('required')">El correo es requerido</span>
-        <span *ngIf="email?.hasError('email')">Ingresa un correo válido</span>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="password">Contraseña *</label>
-      <input 
-        type="password" 
-        id="password" 
-        formControlName="password" 
-        class="form-control"
-        placeholder="Ingresa tu contraseña"
-      >
-      <div *ngIf="password?.touched && password?.invalid" class="error">
-        <span *ngIf="password?.hasError('required')">La contraseña es requerida</span>
-        <span *ngIf="password?.hasError('minlength')">La contraseña debe tener al menos 6 caracteres</span>
-      </div>
-    </div>
-
-    <!-- Error Message -->
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div>
-
-    <!-- Submit Button -->
-    <button 
-      type="submit" 
-      class="btn-submit"
-      [disabled]="isLoading || registerForm.invalid"
-    >
-      {{ isLoading ? 'Creando cuenta...' : 'Crear Cuenta' }}
-    </button>
-
-    <!-- Login Link -->
-    <div class="login-link">
-      <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión aquí</a></p>
-    </div>
-
-  </form>
+  </div>
 </div>
