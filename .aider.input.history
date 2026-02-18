@@ -1,0 +1,42 @@
+
+# 2026-02-16 15:53:51.934606
++y
+
+# 2026-02-16 15:53:59.653355
++n
+
+# 2026-02-16 15:54:54.704313
++"Voy a crear una plataforma de reservas para una barbería. Crea una carpeta llamada backend con una estructura básica de Node.js/Express y una carpeta frontend con un proyecto nuevo de Angular. Configura el package.json del backend con las dependencias básicas: express, cors, mongoose y dotenv. y una vez que termines,para.
+
+# 2026-02-16 15:56:12.764005
++y
+
+# 2026-02-16 15:58:12.544423
++Pero quiero que intoduzcas todos los archivos y carpetas cuando creas un proyecto angular,el que has creado no estan todas las carpetas y archivos.
+
+# 2026-02-16 16:00:00.975325
++y
+
+# 2026-02-16 16:07:43.893431
++*"Dentro de la carpeta backend, crea una carpeta models. Define tres esquemas de Mongoose:
++
++Barber: nombre, especialidad.
++
++Service: nombre (ej: Corte, Barba), precio, duración (minutos).
++
++Appointment: cliente, barberoId, servicioId, fecha (Date) y hora."*
+
+# 2026-02-16 16:10:59.121322
++y
+
+# 2026-02-16 16:12:19.714060
++"Crea un archivo routes/appointments.js en el backend. Necesito un endpoint POST para crear una reserva y un GET para ver todas las reservas de un día específico. Asegúrate de validar que no existan dos citas a la misma hora con el mismo barbero."
+
+# 2026-02-16 16:13:41.773810
++y
+
+# 2026-02-16 16:16:13.097995
++"En Angular, crea un componente llamado ServiceList. Debe llamar a la API del backend y mostrar los servicios disponibles (Corte, Barba, etc.) en tarjetas (cards) usando Angular Material o CSS simple."
+
+# 2026-02-16 16:19:22.565451
++"Crea un componente BookingForm en Angular. Debe tener un selector de fecha y un selector de barbero. Cuando el usuario elija ambos, muestra los horarios disponibles de 9:00 a 18:00 en intervalos de 30 minutos, omitiendo los que ya estén reservados en la base de datos."
